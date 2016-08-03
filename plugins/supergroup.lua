@@ -1270,7 +1270,7 @@ local function run(msg, matches)
 				resolve_username(username,  callbackres, cbres_extra)
 			else
 				savelog(msg.to.id, name_log.." ["..msg.from.id.."] requested SuperGroup ID")
-				return "👥 Group Name : "..msg.to.print_name.."\n💡Group ID : "..msg.to.id.."\n\n👤 Your Name : "..msg.from.print_name.."\n⚡️ Your Username : @"..msg.from.username.."\n💫 Your ID : "..msg.from.id.."\n\n📌 See Setting With /settings"
+				return "👥 نام گروه : "..msg.to.title.."\n💡 آیدی گروه : "..msg.to.id.."\n\n👤 نام شما : "..msg.from.title.."\n⚡️ نام کاربری شما : @"..(msg.from.username or "ندارید").."\n💫 آیدی شما : "..msg.from.id.."\n\n📌 تنظیمات را با این دستور ببینید :\n/settings"
 			end
 		end
 
@@ -1285,11 +1285,11 @@ local function run(msg, matches)
 			local function callback_link (extra , success, result)
 			local receiver = get_receiver(msg)
 				if success == 0 then
-					send_large_msg(receiver, '*Error: Failed to retrieve link* \nReason: Not creator.\n\nIf you have the link, please use /setlink to set it')
+					send_large_msg(receiver, 'اشکالی رخ داد : نتوانستم لینک را عوض کنم* \nدلیل اشکال : من سازنده ی گروه نیستم\n\nاگر گروه لینکی دارد برای تنظیم کردن آن از این دستور استفاده کنید :\n/setlink')
 					data[tostring(msg.to.id)]['settings']['set_link'] = nil
 					save_data(_config.moderation.data, data)
 				else
-					send_large_msg(receiver, "Created a new link")
+					send_large_msg(receiver, "لینک جدید برای گروه ساخته شد")
 					data[tostring(msg.to.id)]['settings']['set_link'] = result
 					save_data(_config.moderation.data, data)
 				end
@@ -1318,10 +1318,10 @@ local function run(msg, matches)
 			end
 			local group_link = data[tostring(msg.to.id)]['settings']['set_link']
 			if not group_link then
-				return "Create a link using /newlink first!\n\nOr if I am not creator use /setlink to set your link"
+				return "از این دستور برای تنظیم لینک گروه استفاده کنید :\n/setlink"
 			end
 			savelog(msg.to.id, name_log.." ["..msg.from.id.."] requested group link ["..group_link.."]")
-			return "Group link:\n"..group_link
+			return "لینک گروه "..msg.to.title.." :\n"..group_link
 		end
 
 		if matches[1] == "invite" and is_sudo(msg) then
@@ -1456,7 +1456,7 @@ local function run(msg, matches)
 				return
 			end
 			if not is_owner(msg) then
-				return "Only owner/admin can promote"
+				return "فقط اونر ها و ادمین ها میتوانند ارتقای درجه دهند"
 			end
 			if type(msg.reply_id) ~= "nil" then
 				local cbreply_extra = {
@@ -1500,7 +1500,7 @@ local function run(msg, matches)
 				return
 			end
 			if not is_owner(msg) then
-				return "Only owner/support/admin can promote"
+				return "فقط اونر ها و ادمین ها میتوانند ارتقای درجه دهند"
 			end
 			if type(msg.reply_id) ~= "nil" then
 				local cbreply_extra = {
@@ -1903,9 +1903,9 @@ local function run(msg, matches)
 				if is_muted(chat_id, msg_type..': yes') then
 					savelog(msg.to.id, name_log.." ["..msg.from.id.."] set SuperGroup to: unmute "..msg_type)
 					unmute(chat_id, msg_type)
-					return "Mute "..msg_type.." has been disabled"
+					return "قفل "..msg_type.." غیر فعال شد"
 				else
-					return "Mute "..msg_type.." is already disabled"
+					return "قفل "..msg_type.." در حال حاضر غیرفعال است"
 				end
 			end
 		end
