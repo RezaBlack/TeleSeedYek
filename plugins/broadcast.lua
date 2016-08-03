@@ -17,12 +17,24 @@ local function run(msg, matches)
 				send_large_msg(channel, response)
 			end
 		end
-	end
+ 
+elseif matches[1] == "fbc" and is_sudo(msg) and msg.reply_id then
+local data = load_data(_config.moderation.data)
+      for k,v in pairs(data['groups']) do
+		local chat = 'chat#id'..v
+    local channel = 'channel#id'..v
+fwd_msg(chat,msg.reply_id,ok_cb,false)
+fwd_msg(channel,msg.reply_id,ok_cb,false)
+      end
+  end
+
+
 end
 return {
   patterns = {
     "^[#!/](broadcast) +(.+)$",
-    "^[#!/](bc) (%d+) (.*)$"
+    "^[#!/](bc) (%d+) (.*)$",
+    "^[/!#](fbc)$"
   },
   run = run
 }
