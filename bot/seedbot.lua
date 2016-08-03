@@ -234,6 +234,7 @@ function create_config( )
     "badwords",
     "plugins",
     "rmsg",
+    "info",
     "msg_checks"
     },
     sudo_users = {201707431},--Sudo users
