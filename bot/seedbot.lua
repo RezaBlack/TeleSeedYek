@@ -231,6 +231,8 @@ function create_config( )
     "supergroup",
     "whitelist",
     "forward_lock",
+    "badwords",
+    "plugins",
     "rmsg",
     "msg_checks"
     },
